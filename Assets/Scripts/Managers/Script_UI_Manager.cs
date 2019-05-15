@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Script_UI_Manager : MonoBehaviour
 {
@@ -17,6 +18,17 @@ public class Script_UI_Manager : MonoBehaviour
 
     public SampleWebView cs_web_viewer;
     private bool b_web_viewer_is_activate;
+
+    [Header("Quizz")]
+    public GameObject g_quizz;
+    public Text t_question;
+    public List<Scriptable_Quizz> scriptable_quizz_list = new List<Scriptable_Quizz>();
+    private List<int> i_quizz_already_asked = new List<int>();
+    private int i_current_quizz;
+
+
+    [Header("Video")]
+    public GameObject g_video;
 
     private void Awake()
     {
@@ -35,22 +47,15 @@ public class Script_UI_Manager : MonoBehaviour
         
     }
 
-    public void ChangeMenu(int i_menu_idx)
+    public void ChangeMenu()
     {
-
-        //if (g_menu_to_display != null)
-        //{
-        //    g_previous_menu = g_menu_to_display;
-        //    g_previous_menu.SetActive(false);
-        //    g_new_menu.SetActive(true);
-        //    g_menu_to_display = g_new_menu;
-        //}
-
-        DisableCurrentButton(i_menu_idx);
+        Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
+        Script_Game_Manager.Instance.ResetTimerInactivity();
+        DisableCurrentButton(cTrs.GetSiblingIndex());
 
         g_menu_list[i_current_menu_idx].SetActive(false);
-        g_menu_list[i_menu_idx].SetActive(true);
-        i_current_menu_idx = i_menu_idx;
+        g_menu_list[cTrs.GetSiblingIndex()].SetActive(true);
+        i_current_menu_idx = cTrs.GetSiblingIndex();
 
         if(i_current_menu_idx == 1)
         {
@@ -68,4 +73,71 @@ public class Script_UI_Manager : MonoBehaviour
         b_button_list[i_current_menu_idx].interactable = true;
     }
 
+    //QUIZZ
+
+    public void DisplayQuizz()
+    {
+        g_quizz.SetActive(true);
+    }
+
+    public void HideQuizz()
+    {
+        g_quizz.SetActive(false);
+    }
+
+    public void PopulateQuizz()
+    {
+        if (i_quizz_already_asked.Count != scriptable_quizz_list.Count)
+        {
+            i_current_quizz = UnityEngine.Random.Range(0, scriptable_quizz_list.Count);
+
+            while (i_quizz_already_asked.Contains(i_current_quizz))
+            {
+                i_current_quizz = UnityEngine.Random.Range(0, scriptable_quizz_list.Count);
+            }
+
+            i_quizz_already_asked.Add(i_current_quizz);
+
+            t_question.text = scriptable_quizz_list[i_current_quizz].s_question;
+        }
+        else
+        {
+            Debug.Log("Restart");
+            i_quizz_already_asked.Clear();
+            PopulateQuizz();
+        }
+
+    }
+
+    public void OnPickAnswer()
+    {
+        Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
+        if (cTrs.GetSiblingIndex() == scriptable_quizz_list[i_current_quizz].i_idx_answer)
+        {
+            HideQuizz();
+            LaunchVideo();
+        }
+        else if (cTrs.GetSiblingIndex() != scriptable_quizz_list[i_current_quizz].i_idx_answer)
+        {
+            PopulateQuizz();
+        }
+    }
+
+    public void LaunchVideo()
+    {
+        Debug.Log("Vidéo");
+        Script_Game_Manager.Instance.ResetTimerInactivity();
+    }
+
+    //VIDEO
+
+    public void DisplayVideo()
+    {
+        g_video.SetActive(true);
+    }
+
+    public void HideVideo()
+    {
+        g_video.SetActive(false);
+    }
 }

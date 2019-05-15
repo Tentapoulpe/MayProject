@@ -12,12 +12,19 @@ public class ApplicationChromeParent : MonoBehaviour
     {
         ApplicationChrome.statusBarState = ApplicationChrome.navigationBarState = ApplicationChrome.States.Hidden;
         ApplicationChrome.dimmed = !ApplicationChrome.dimmed;
-        Debug.Log("BONSOIR");
+        Debug.Log("test1");
     }
 }
 
 public class ApplicationChrome: MonoBehaviour
 {
+
+    private void Start()
+    {
+        Debug.Log("test2");
+        ApplicationChrome.statusBarState = ApplicationChrome.navigationBarState = ApplicationChrome.States.Hidden;
+        ApplicationChrome.dimmed = !ApplicationChrome.dimmed;
+    }
     // Enums
     public enum States
     {
