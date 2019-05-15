@@ -11,7 +11,7 @@ public class Script_Game_Manager : MonoBehaviour
 
     private void Start()
     {
-
+        Screen.fullScreen = true;
     }
 
     void Update()

@@ -11,6 +11,7 @@ public class ApplicationChromeParent : MonoBehaviour
     private void Start()
     {
         ApplicationChrome.statusBarState = ApplicationChrome.navigationBarState = ApplicationChrome.States.Hidden;
+        ApplicationChrome.dimmed = !ApplicationChrome.dimmed;
         Debug.Log("BONSOIR");
     }
 }
