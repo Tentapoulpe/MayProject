@@ -127,6 +127,7 @@ public class Script_UI_Manager : MonoBehaviour
     {
         Debug.Log("Vidéo");
         Script_Game_Manager.Instance.ResetTimerInactivity();
+        DisplayVideo();
     }
 
     //VIDEO
