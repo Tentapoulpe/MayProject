@@ -9,24 +9,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class Script_Input_Field : MonoBehaviour
 {
     public InputField my_input_field;
-    public string s_e_mail;
-    //public bool b_already_e_mail;
+    private string s_e_mail;
 
-    void Start()
-    {
-        //if (b_already_e_mail == true)
-        //{
-        //    my_input_field.text = PlayerPrefs.GetString("e_mail");
-        //}
-    }
-
-    public void SaveUsername(string mail_adress)
+    public void SaveEmail(string mail_adress)
     {
         Debug.Log("Save mail");
-        //b_already_e_mail = true;
         s_e_mail = mail_adress;
         Debug.Log(s_e_mail);
-        //Save();
+        Save();
         //PlayerPrefs.SetString("e_mail", mail_adress);
     }
 

@@ -47,6 +47,9 @@ public class Script_UI_Manager : MonoBehaviour
         
     }
 
+    //MENU MANAGER 
+
+
     public void ChangeMenu()
     {
         Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
@@ -56,11 +59,11 @@ public class Script_UI_Manager : MonoBehaviour
         g_menu_list[cTrs.GetSiblingIndex()].SetActive(true);
         i_current_menu_idx = cTrs.GetSiblingIndex();
 
-        if(i_current_menu_idx == 1)
+        if(cTrs.GetSiblingIndex() == 0)
         {
             cs_web_viewer.StartWebViewer();
         }
-        else if (i_current_menu_idx != 1)
+        else if (cTrs.GetSiblingIndex() != 0)
         {
             cs_web_viewer.StopWebView();
         }
@@ -73,6 +76,19 @@ public class Script_UI_Manager : MonoBehaviour
     }
 
     //QUIZZ
+
+    public void VerifyScreen()// si on est pas sur l'écran de WEB
+    {
+        if(i_current_menu_idx != 0)
+        {
+            DisplayQuizz();
+            PopulateQuizz();
+        }
+        else
+        {
+            Script_Game_Manager.Instance.ResetTimerInactivity();
+        }
+    }
 
     public void DisplayQuizz()
     {

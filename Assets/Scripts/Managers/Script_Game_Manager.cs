@@ -35,6 +35,7 @@ public class Script_Game_Manager : MonoBehaviour
     {
         Debug.Log("ResetQuizzTimer");
         f_current_timer = f_set_timer;
+        b_can_block = true;
     }
 
     void Update()
@@ -46,8 +47,7 @@ public class Script_Game_Manager : MonoBehaviour
             {
                 b_can_block = false;
                 f_current_timer = f_set_timer;
-                Script_UI_Manager.Instance.DisplayQuizz();
-                Script_UI_Manager.Instance.PopulateQuizz();
+                Script_UI_Manager.Instance.VerifyScreen();
             }
         }
 
