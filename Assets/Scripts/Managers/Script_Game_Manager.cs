@@ -9,7 +9,7 @@ public class Script_Game_Manager : MonoBehaviour
     public static Script_Game_Manager Instance { private set; get; }
 
     [Header("EcranVeille")]
-    private bool b_can_block = true;
+    public bool b_can_block = true;
     public float f_set_timer;
     private float f_current_timer;
 
@@ -57,6 +57,11 @@ public class Script_Game_Manager : MonoBehaviour
             {
                 Debug.Log("Back");
             }
+        }
+
+        if(Input.anyKey && b_can_block)
+        {
+            ResetTimerInactivity();
         }
     }
 

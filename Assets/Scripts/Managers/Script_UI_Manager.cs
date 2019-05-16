@@ -50,7 +50,6 @@ public class Script_UI_Manager : MonoBehaviour
     public void ChangeMenu()
     {
         Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
-        Script_Game_Manager.Instance.ResetTimerInactivity();
         DisableCurrentButton(cTrs.GetSiblingIndex());
 
         g_menu_list[i_current_menu_idx].SetActive(false);
@@ -100,13 +99,12 @@ public class Script_UI_Manager : MonoBehaviour
 
             t_question.text = scriptable_quizz_list[i_current_quizz].s_question;
         }
-        else
+        else if(i_quizz_already_asked.Count == scriptable_quizz_list.Count)
         {
             Debug.Log("Restart");
             i_quizz_already_asked.Clear();
             PopulateQuizz();
         }
-
     }
 
     public void OnPickAnswer()
