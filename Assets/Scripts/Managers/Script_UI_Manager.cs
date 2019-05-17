@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Video;
 
 public class Script_UI_Manager : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class Script_UI_Manager : MonoBehaviour
 
     [Header("Video")]
     public GameObject g_video;
+
+    [Header("Interactive Video")]
+    public VideoPlayer my_video_player;
+
 
 
     private void Awake()
@@ -132,6 +137,8 @@ public class Script_UI_Manager : MonoBehaviour
         }
     }
 
+    //VIDEO
+
     public void LaunchVideo()
     {
         Debug.Log("Vidéo");
@@ -139,8 +146,6 @@ public class Script_UI_Manager : MonoBehaviour
         FlipVideoHorizontally();
         DisplayVideo();
     }
-
-    //VIDEO
 
     public void DisplayVideo()
     {
@@ -157,5 +162,13 @@ public class Script_UI_Manager : MonoBehaviour
     public void FlipVideoHorizontally()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
+    }
+
+    //INTERACTIVE VIDEO
+
+    public void PlayInteractiveVideo(VideoClip video)
+    {
+        my_video_player.clip = video;
+        my_video_player.Play();
     }
 }
