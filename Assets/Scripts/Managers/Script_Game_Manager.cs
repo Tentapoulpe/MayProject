@@ -28,7 +28,7 @@ public class Script_Game_Manager : MonoBehaviour
     private void Start()
     {
         ResetTimerInactivity();
-        Screen.fullScreen = false;
+        Screen.fullScreen = true;
     }
 
     public void ResetTimerInactivity()
@@ -36,6 +36,11 @@ public class Script_Game_Manager : MonoBehaviour
         Debug.Log("ResetQuizzTimer");
         f_current_timer = f_set_timer;
         b_can_block = true;
+    }
+
+    public void DisablePopUpQuizz()
+    {
+        b_can_block = false;
     }
 
     void Update()

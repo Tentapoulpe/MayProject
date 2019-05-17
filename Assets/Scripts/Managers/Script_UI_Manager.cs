@@ -81,7 +81,7 @@ public class Script_UI_Manager : MonoBehaviour
         }
         else
         {
-            Script_Game_Manager.Instance.ResetTimerInactivity();
+            Script_Game_Manager.Instance.DisablePopUpQuizz();
         }
     }
 
@@ -135,6 +135,8 @@ public class Script_UI_Manager : MonoBehaviour
     public void LaunchVideo()
     {
         Debug.Log("Vidéo");
+        Script_Game_Manager.Instance.DisablePopUpQuizz();
+        FlipVideoHorizontally();
         DisplayVideo();
     }
 
@@ -148,6 +150,12 @@ public class Script_UI_Manager : MonoBehaviour
     public void HideVideo()
     {
         g_video.SetActive(false);
+        Screen.orientation = ScreenOrientation.Portrait;
         Script_Game_Manager.Instance.ResetTimerInactivity();
+    }
+
+    public void FlipVideoHorizontally()
+    {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 }
