@@ -28,7 +28,7 @@ public class Script_Game_Manager : MonoBehaviour
     private void Start()
     {
         ResetTimerInactivity();
-        Screen.fullScreen = true;
+        Screen.fullScreen = false;
     }
 
     public void ResetTimerInactivity()
@@ -68,11 +68,5 @@ public class Script_Game_Manager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
-    }
-
-    public void EndVideo()
-    {
-        Script_UI_Manager.Instance.HideVideo();
-        b_can_block = true;
     }
 }

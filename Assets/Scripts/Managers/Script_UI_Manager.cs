@@ -26,9 +26,9 @@ public class Script_UI_Manager : MonoBehaviour
     private List<int> i_quizz_already_asked = new List<int>();
     private int i_current_quizz;
 
-
     [Header("Video")]
     public GameObject g_video;
+
 
     private void Awake()
     {
@@ -40,11 +40,6 @@ public class Script_UI_Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        
     }
 
     //MENU MANAGER 
@@ -140,7 +135,6 @@ public class Script_UI_Manager : MonoBehaviour
     public void LaunchVideo()
     {
         Debug.Log("Vidéo");
-        Script_Game_Manager.Instance.ResetTimerInactivity();
         DisplayVideo();
     }
 
@@ -154,5 +148,6 @@ public class Script_UI_Manager : MonoBehaviour
     public void HideVideo()
     {
         g_video.SetActive(false);
+        Script_Game_Manager.Instance.ResetTimerInactivity();
     }
 }
