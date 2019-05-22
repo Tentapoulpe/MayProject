@@ -30,8 +30,9 @@ public class Script_UI_Manager : MonoBehaviour
     [Header("Video")]
     public GameObject g_video;
 
-    [Header("Interactive Video")]
-    public VideoPlayer my_video_player;
+    //[Header("Interactive Video")]
+    //public VideoPlayer my_video_player;
+    ////public List<Collider> my_collider_video = new 
 
 
 
@@ -155,7 +156,7 @@ public class Script_UI_Manager : MonoBehaviour
     public void HideVideo()
     {
         g_video.SetActive(false);
-        Screen.orientation = ScreenOrientation.Portrait;
+        //Screen.orientation = ScreenOrientation.Portrait;
         Script_Game_Manager.Instance.ResetTimerInactivity();
     }
 
@@ -166,9 +167,9 @@ public class Script_UI_Manager : MonoBehaviour
 
     //INTERACTIVE VIDEO
 
-    public void PlayInteractiveVideo(VideoClip video)
-    {
-        my_video_player.clip = video;
-        my_video_player.Play();
-    }
+    //public void PlayInteractiveVideo(VideoClip video)
+    //{
+    //    my_video_player.clip = video;
+    //    my_video_player.Play();
+    //}
 }

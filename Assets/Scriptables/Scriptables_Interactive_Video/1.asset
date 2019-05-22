@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f008b19104d8848bed8fa94d9e3833, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  video_to_play: {fileID: 0}
-  scriptable_interactive_video: []
+  video_to_play: {fileID: 32900000, guid: 67b505e4d9e652249a5b154b230d8de9, type: 3}
+  scriptable_interactive_video:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

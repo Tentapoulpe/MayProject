@@ -7,5 +7,5 @@ using UnityEngine.Video;
 public class Scriptable_Interactive_Video : ScriptableObject
 {
     public VideoClip video_to_play;
-    public List<Scriptable_Interactive_Video> scriptable_interactive_video = new List<Scriptable_Interactive_Video>(4);
+    public List<Scriptable_Interactive_Video> scriptable_interactive_video = new List<Scriptable_Interactive_Video>();
 }
