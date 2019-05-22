@@ -67,6 +67,11 @@ public class Script_UI_Manager : MonoBehaviour
         {
             cs_web_viewer.StartWebViewer();
         }
+        if(cTrs.GetSiblingIndex() ==1)
+        {
+            PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[0]);
+            i_current_video_idx++;
+        }
         else if (cTrs.GetSiblingIndex() != 0)
         {
             cs_web_viewer.StopWebView();
@@ -159,7 +164,6 @@ public class Script_UI_Manager : MonoBehaviour
     public void HideVideo()
     {
         g_video.SetActive(false);
-        //Screen.orientation = ScreenOrientation.Portrait;
         Script_Game_Manager.Instance.ResetTimerInactivity();
     }
 
@@ -174,9 +178,24 @@ public class Script_UI_Manager : MonoBehaviour
     {
         my_video_player.clip = video;
         my_video_player.Play();
-        //my_video_player.loopPointReached += UpdateButtonVideo;
-        UpdateButtonVideo();
+        my_video_player.loopPointReached += UpdateButtonVideo;
+    }
+
+    public void UpdateButtonVideo(UnityEngine.Video.VideoPlayer vp)
+    {
+        for (int i = 0; i < buttons_video_player.Count; i++)
+        {
+            if (scriptable_video[i_current_video_idx].video_to_play[i] != null)
+            {
+                buttons_video_player[i].interactable = true;
+            }
+            else
+            {
+                buttons_video_player[i].interactable = false;
+            }
+        }
         b_can_show_buttons = true;
+        my_video_player.loopPointReached -= UpdateButtonVideo;
     }
 
     public void SelectVideo()
@@ -186,39 +205,26 @@ public class Script_UI_Manager : MonoBehaviour
             Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
             if (cTrs.GetSiblingIndex() == 0)
             {
-                PlayInteractiveVideo(scriptable_video[cTrs.GetSiblingIndex()].video_to_play[cTrs.GetSiblingIndex()]);
+                PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[cTrs.GetSiblingIndex()]);
+                i_current_video_idx++;
             }
 
             if (cTrs.GetSiblingIndex() == 1)
             {
-                PlayInteractiveVideo(scriptable_video[cTrs.GetSiblingIndex()].video_to_play[cTrs.GetSiblingIndex()]);
+                PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[cTrs.GetSiblingIndex()]);
+                i_current_video_idx--;
             }
 
             if (cTrs.GetSiblingIndex() == 2)
             {
-                PlayInteractiveVideo(scriptable_video[cTrs.GetSiblingIndex()].video_to_play[cTrs.GetSiblingIndex()]);
+                PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[cTrs.GetSiblingIndex()]);
             }
 
             if (cTrs.GetSiblingIndex() == 3)
             {
-                PlayInteractiveVideo(scriptable_video[cTrs.GetSiblingIndex()].video_to_play[cTrs.GetSiblingIndex()]);
+                PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[cTrs.GetSiblingIndex()]);
             }
             b_can_show_buttons = false;
-        }
-    }
-
-    void UpdateButtonVideo()
-    {
-        for(int i = 0; i < buttons_video_player.Count; i++)
-        {
-            if(scriptable_video[i_current_video_idx].video_to_play[i] != null)
-            {
-                buttons_video_player[i].interactable = true;
-            }
-            else
-            {
-                buttons_video_player[i].interactable = false;
-            }
         }
     }
 }

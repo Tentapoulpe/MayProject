@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: 
   video_to_play:
+  - {fileID: 0}
   - {fileID: 32900000, guid: 44c2dff3283248948ac697bc0e9828cb, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
