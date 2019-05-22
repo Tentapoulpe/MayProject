@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f008b19104d8848bed8fa94d9e3833, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  video_to_play: {fileID: 32900000, guid: 67b505e4d9e652249a5b154b230d8de9, type: 3}
-  scriptable_interactive_video:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  video_to_play:
+  - {fileID: 32900000, guid: 481b6fe7ae5d9724d8e2a8b5580d4d2f, type: 3}
+  - {fileID: 32900000, guid: dfb12b2c4cd02ba47b7e58ddcf1aa3da, type: 3}
+  - {fileID: 32900000, guid: ac3550c79ab62ef4da5c42670c485f64, type: 3}

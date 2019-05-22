@@ -30,9 +30,12 @@ public class Script_UI_Manager : MonoBehaviour
     [Header("Video")]
     public GameObject g_video;
 
-    //[Header("Interactive Video")]
-    //public VideoPlayer my_video_player;
-    ////public List<Collider> my_collider_video = new 
+    [Header("Interactive Video")]
+    public VideoPlayer my_video_player;
+    public List<Button> buttons_video_player = new List<Button>();
+    public List<Scriptable_Interactive_Video> scriptable_video = new List<Scriptable_Interactive_Video>();
+    private int i_current_video_idx = 0;
+    private bool b_can_show_buttons;
 
 
 
@@ -167,9 +170,55 @@ public class Script_UI_Manager : MonoBehaviour
 
     //INTERACTIVE VIDEO
 
-    //public void PlayInteractiveVideo(VideoClip video)
-    //{
-    //    my_video_player.clip = video;
-    //    my_video_player.Play();
-    //}
+    public void PlayInteractiveVideo(VideoClip video)
+    {
+        my_video_player.clip = video;
+        my_video_player.Play();
+        //my_video_player.loopPointReached += UpdateButtonVideo;
+        UpdateButtonVideo();
+        b_can_show_buttons = true;
+    }
+
+    public void SelectVideo()
+    {
+        if(b_can_show_buttons)
+        {
+            Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
+            if (cTrs.GetSiblingIndex() == 0)
+            {
+                PlayInteractiveVideo(scriptable_video[cTrs.GetSiblingIndex()].video_to_play[cTrs.GetSiblingIndex()]);
+            }
+
+            if (cTrs.GetSiblingIndex() == 1)
+            {
+                PlayInteractiveVideo(scriptable_video[cTrs.GetSiblingIndex()].video_to_play[cTrs.GetSiblingIndex()]);
+            }
+
+            if (cTrs.GetSiblingIndex() == 2)
+            {
+                PlayInteractiveVideo(scriptable_video[cTrs.GetSiblingIndex()].video_to_play[cTrs.GetSiblingIndex()]);
+            }
+
+            if (cTrs.GetSiblingIndex() == 3)
+            {
+                PlayInteractiveVideo(scriptable_video[cTrs.GetSiblingIndex()].video_to_play[cTrs.GetSiblingIndex()]);
+            }
+            b_can_show_buttons = false;
+        }
+    }
+
+    void UpdateButtonVideo()
+    {
+        for(int i = 0; i < buttons_video_player.Count; i++)
+        {
+            if(scriptable_video[i_current_video_idx].video_to_play[i] != null)
+            {
+                buttons_video_player[i].interactable = true;
+            }
+            else
+            {
+                buttons_video_player[i].interactable = false;
+            }
+        }
+    }
 }
