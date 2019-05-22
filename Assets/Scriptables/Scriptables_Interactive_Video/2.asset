@@ -17,3 +17,7 @@ MonoBehaviour:
   - {fileID: 32900000, guid: 02ccec7a6e38f124eb5b0450a0b17f17, type: 3}
   - {fileID: 0}
   - {fileID: 0}
+  i_top_button_idx: 0
+  i_bot_button_idx: 1
+  i_left_button_idx: 0
+  i_right_button_idx: 0

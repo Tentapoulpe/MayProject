@@ -34,7 +34,7 @@ public class Script_UI_Manager : MonoBehaviour
     public VideoPlayer my_video_player;
     public List<Button> buttons_video_player = new List<Button>();
     public List<Scriptable_Interactive_Video> scriptable_video = new List<Scriptable_Interactive_Video>();
-    private int i_current_video_idx = 0;
+    private int i_current_scriptable_idx = 1;
     private bool b_can_show_buttons;
 
 
@@ -66,11 +66,6 @@ public class Script_UI_Manager : MonoBehaviour
         if(cTrs.GetSiblingIndex() == 0)
         {
             cs_web_viewer.StartWebViewer();
-        }
-        if(cTrs.GetSiblingIndex() ==1)
-        {
-            PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[0]);
-            i_current_video_idx++;
         }
         else if (cTrs.GetSiblingIndex() != 0)
         {
@@ -185,7 +180,7 @@ public class Script_UI_Manager : MonoBehaviour
     {
         for (int i = 0; i < buttons_video_player.Count; i++)
         {
-            if (scriptable_video[i_current_video_idx].video_to_play[i] != null)
+            if (scriptable_video[i_current_scriptable_idx].video_to_play[i] != null)
             {
                 buttons_video_player[i].interactable = true;
             }
@@ -203,26 +198,28 @@ public class Script_UI_Manager : MonoBehaviour
         if(b_can_show_buttons)
         {
             Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
-            if (cTrs.GetSiblingIndex() == 0)
+            if (cTrs.GetSiblingIndex() == 0)//Button Top
             {
-                PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[cTrs.GetSiblingIndex()]);
-                i_current_video_idx++;
+                PlayInteractiveVideo(scriptable_video[i_current_scriptable_idx].video_to_play[cTrs.GetSiblingIndex()]);
+                i_current_scriptable_idx = scriptable_video[i_current_scriptable_idx].i_top_button_idx;
             }
 
-            if (cTrs.GetSiblingIndex() == 1)
+            if (cTrs.GetSiblingIndex() == 1)//Button Bot
             {
-                PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[cTrs.GetSiblingIndex()]);
-                i_current_video_idx--;
+                PlayInteractiveVideo(scriptable_video[i_current_scriptable_idx].video_to_play[cTrs.GetSiblingIndex()]);
+                i_current_scriptable_idx = scriptable_video[i_current_scriptable_idx].i_bot_button_idx;
             }
 
-            if (cTrs.GetSiblingIndex() == 2)
+            if (cTrs.GetSiblingIndex() == 2)//Button Left
             {
-                PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[cTrs.GetSiblingIndex()]);
+                PlayInteractiveVideo(scriptable_video[i_current_scriptable_idx].video_to_play[cTrs.GetSiblingIndex()]);
+                i_current_scriptable_idx = scriptable_video[i_current_scriptable_idx].i_left_button_idx;
             }
 
-            if (cTrs.GetSiblingIndex() == 3)
+            if (cTrs.GetSiblingIndex() == 3)//Button Right
             {
-                PlayInteractiveVideo(scriptable_video[i_current_video_idx].video_to_play[cTrs.GetSiblingIndex()]);
+                PlayInteractiveVideo(scriptable_video[i_current_scriptable_idx].video_to_play[cTrs.GetSiblingIndex()]);
+                i_current_scriptable_idx = scriptable_video[i_current_scriptable_idx].i_right_button_idx;
             }
             b_can_show_buttons = false;
         }
