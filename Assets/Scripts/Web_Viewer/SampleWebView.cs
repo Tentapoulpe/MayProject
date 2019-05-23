@@ -101,7 +101,7 @@ public class SampleWebView : MonoBehaviour
         webViewObject.bitmapRefreshCycle = 1;
 #endif
         //webViewObject.SetMargins(5, 100, 5, Screen.height / 4);
-        webViewObject.SetMargins(0, 0 , 350, 0);
+        webViewObject.SetMargins(0, 0 , 320, 0);
         webViewObject.SetVisibility(true);
 
 #if !UNITY_WEBPLAYER

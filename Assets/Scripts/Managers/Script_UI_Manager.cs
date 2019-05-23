@@ -34,7 +34,7 @@ public class Script_UI_Manager : MonoBehaviour
     public VideoPlayer my_video_player;
     public List<Button> buttons_video_player = new List<Button>();
     public List<Scriptable_Interactive_Video> scriptable_video = new List<Scriptable_Interactive_Video>();
-    private int i_current_scriptable_idx = 1;
+    private int i_current_scriptable_idx=0;
     private bool b_can_show_buttons;
 
 
@@ -67,6 +67,11 @@ public class Script_UI_Manager : MonoBehaviour
         {
             cs_web_viewer.StartWebViewer();
         }
+        else if (cTrs.GetSiblingIndex() != 0 && cTrs.GetSiblingIndex() == 1)
+        {
+            PlayInteractiveVideo(scriptable_video[0].video_to_play[0]);
+            i_current_scriptable_idx = 1;
+        }
         else if (cTrs.GetSiblingIndex() != 0)
         {
             cs_web_viewer.StopWebView();
@@ -83,7 +88,7 @@ public class Script_UI_Manager : MonoBehaviour
 
     public void VerifyScreen()// si on est pas sur l'écran de WEB
     {
-        if(i_current_menu_idx != 0)
+        if(i_current_menu_idx != 0 || i_current_scriptable_idx != 1)
         {
             DisplayQuizz();
             PopulateQuizz();
@@ -104,7 +109,7 @@ public class Script_UI_Manager : MonoBehaviour
         g_quizz.SetActive(false);
     }
 
-    public void PopulateQuizz()
+    public void PopulateQuizz()//Renseigné dans les boutons / text le string correspondant au quizz actuel
     {
         if (i_quizz_already_asked.Count != scriptable_quizz_list.Count)
         {
@@ -127,7 +132,7 @@ public class Script_UI_Manager : MonoBehaviour
         }
     }
 
-    public void OnPickAnswer()
+    public void OnPickAnswer()//Selectionner une réponse
     {
         Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
         if (cTrs.GetSiblingIndex() == scriptable_quizz_list[i_current_quizz].i_idx_answer)
@@ -169,14 +174,14 @@ public class Script_UI_Manager : MonoBehaviour
 
     //INTERACTIVE VIDEO
 
-    public void PlayInteractiveVideo(VideoClip video)
+    public void PlayInteractiveVideo(VideoClip video)//Jouer une video
     {
         my_video_player.clip = video;
         my_video_player.Play();
         my_video_player.loopPointReached += UpdateButtonVideo;
     }
 
-    public void UpdateButtonVideo(UnityEngine.Video.VideoPlayer vp)
+    public void UpdateButtonVideo(UnityEngine.Video.VideoPlayer vp)//Mettre à jour les boutons correspondant aux videos rensignées dans le scriptable
     {
         for (int i = 0; i < buttons_video_player.Count; i++)
         {
@@ -193,7 +198,7 @@ public class Script_UI_Manager : MonoBehaviour
         my_video_player.loopPointReached -= UpdateButtonVideo;
     }
 
-    public void SelectVideo()
+    public void SelectVideo()//Mettre à jour le current scriptable et envoyer la vidéo correspondante au bouton selectionné
     {
         if(b_can_show_buttons)
         {
@@ -222,6 +227,11 @@ public class Script_UI_Manager : MonoBehaviour
                 i_current_scriptable_idx = scriptable_video[i_current_scriptable_idx].i_right_button_idx;
             }
             b_can_show_buttons = false;
+
+            foreach(Button interactivebutton in buttons_video_player)
+            {
+                interactivebutton.interactable = false;
+            }
         }
     }
 }
