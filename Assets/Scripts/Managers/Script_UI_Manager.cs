@@ -37,7 +37,11 @@ public class Script_UI_Manager : MonoBehaviour
     private int i_current_scriptable_idx=0;
     private bool b_can_show_buttons;
 
-
+    [Header ("Contacts")]
+    public InputField my_input_field;
+    public GameObject text_send;
+    public float f_delay_text_display;
+    private string s_e_mail;
 
     private void Awake()
     {
@@ -51,8 +55,13 @@ public class Script_UI_Manager : MonoBehaviour
         }
     }
 
-    //MENU MANAGER 
+    IEnumerator WaitTime(float f_waiting_time)
+    {
+        yield return new WaitForSeconds(f_waiting_time);
+    }
 
+    #region Menu Manager
+    //MENU MANAGER 
 
     public void ChangeMenu()
     {
@@ -83,88 +92,9 @@ public class Script_UI_Manager : MonoBehaviour
         b_button_list[i_menu_idx].interactable = false;
         b_button_list[i_current_menu_idx].interactable = true;
     }
+    #endregion
 
-    //QUIZZ
-
-    public void VerifyScreen()// si on est pas sur l'écran de WEB ou Interactive video
-    {
-        if(i_current_menu_idx != 0 || i_current_scriptable_idx != 1)
-        {
-            DisplayQuizz();
-            PopulateQuizz();
-        }
-        else
-        {
-            Script_Game_Manager.Instance.DisablePopUpQuizz();
-        }
-    }
-
-    public void DisplayQuizz()
-    {
-        g_quizz.SetActive(true);
-    }
-
-    public void HideQuizz()
-    {
-        g_quizz.SetActive(false);
-    }
-
-    public void PopulateQuizz()//Renseigné dans les boutons / text le string correspondant au quizz actuel
-    {
-        if (i_quizz_already_asked.Count != scriptable_quizz_list.Count)
-        {
-            i_current_quizz = UnityEngine.Random.Range(0, scriptable_quizz_list.Count);
-
-            while (i_quizz_already_asked.Contains(i_current_quizz))
-            {
-                i_current_quizz = UnityEngine.Random.Range(0, scriptable_quizz_list.Count);
-            }
-
-            i_quizz_already_asked.Add(i_current_quizz);
-
-            t_question.text = scriptable_quizz_list[i_current_quizz].s_question;
-        }
-        else if(i_quizz_already_asked.Count == scriptable_quizz_list.Count)
-        {
-            Debug.Log("Restart");
-            i_quizz_already_asked.Clear();
-            PopulateQuizz();
-        }
-    }
-
-    public void OnPickAnswer()//Selectionner une réponse
-    {
-        Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
-        if (cTrs.GetSiblingIndex() == scriptable_quizz_list[i_current_quizz].i_idx_answer)
-        {
-            HideQuizz();
-            LaunchVideo();
-        }
-        else if (cTrs.GetSiblingIndex() != scriptable_quizz_list[i_current_quizz].i_idx_answer)
-        {
-            PopulateQuizz();
-        }
-    }
-
-    //VIDEO
-
-    public void LaunchVideo()
-    {
-        Script_Game_Manager.Instance.DisablePopUpQuizz();
-        DisplayVideo();
-    }
-
-    public void DisplayVideo()
-    {
-        g_video.SetActive(true);
-    }
-
-    public void HideVideo()
-    {
-        g_video.SetActive(false);
-        Script_Game_Manager.Instance.ResetTimerInactivity();
-    }
-
+    #region Interactive Video
     //INTERACTIVE VIDEO
 
     public void PlayInteractiveVideo(VideoClip video)//Jouer une video
@@ -227,4 +157,104 @@ public class Script_UI_Manager : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Contacts
+    public void SaveEmail()
+    {
+        s_e_mail = my_input_field.text;
+        Debug.Log(s_e_mail);
+        Script_Save_Manager.Instance.Save(s_e_mail);
+        my_input_field.text = "";
+        my_input_field.GetComponentInChildren<Text>().text = "Envoyé";
+        StartCoroutine(WaitTime(f_delay_text_display));
+        my_input_field.GetComponentInChildren<Text>().text = "@";
+    }
+    #endregion
+
+    #region Video
+    //VIDEO
+
+    public void LaunchVideo()
+    {
+        Script_Game_Manager.Instance.DisablePopUpQuizz();
+        DisplayVideo();
+    }
+
+    public void DisplayVideo()
+    {
+        g_video.SetActive(true);
+    }
+
+    public void HideVideo()
+    {
+        g_video.SetActive(false);
+        Script_Game_Manager.Instance.ResetTimerInactivity();
+    }
+
+    #endregion
+
+    #region Quizz
+    //QUIZZ
+
+    public void VerifyScreen()// si on est pas sur l'écran de WEB ou Interactive video
+    {
+        if (i_current_menu_idx != 0 || i_current_scriptable_idx != 1)
+        {
+            DisplayQuizz();
+            PopulateQuizz();
+        }
+        else
+        {
+            Script_Game_Manager.Instance.DisablePopUpQuizz();
+        }
+    }
+
+    public void PopulateQuizz()//Renseigné dans les boutons / text le string correspondant au quizz actuel
+    {
+        if (i_quizz_already_asked.Count != scriptable_quizz_list.Count)
+        {
+            i_current_quizz = UnityEngine.Random.Range(0, scriptable_quizz_list.Count);
+
+            while (i_quizz_already_asked.Contains(i_current_quizz))
+            {
+                i_current_quizz = UnityEngine.Random.Range(0, scriptable_quizz_list.Count);
+            }
+
+            i_quizz_already_asked.Add(i_current_quizz);
+
+            t_question.text = scriptable_quizz_list[i_current_quizz].s_question;
+        }
+        else if (i_quizz_already_asked.Count == scriptable_quizz_list.Count)
+        {
+            Debug.Log("Restart");
+            i_quizz_already_asked.Clear();
+            PopulateQuizz();
+        }
+    }
+
+    public void OnPickAnswer()//Selectionner une réponse
+    {
+        Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
+        if (cTrs.GetSiblingIndex() == scriptable_quizz_list[i_current_quizz].i_idx_answer)
+        {
+            HideQuizz();
+            LaunchVideo();
+        }
+        else if (cTrs.GetSiblingIndex() != scriptable_quizz_list[i_current_quizz].i_idx_answer)
+        {
+            PopulateQuizz();
+        }
+    }
+
+    public void DisplayQuizz()
+    {
+        g_quizz.SetActive(true);
+    }
+
+    public void HideQuizz()
+    {
+        g_quizz.SetActive(false);
+    }
+    #endregion
 }

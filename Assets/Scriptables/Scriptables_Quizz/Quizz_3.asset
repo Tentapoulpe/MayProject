@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d99084a514a23242bb93dab67b9d66f, type: 3}
-  m_Name: Quizz_03
+  m_Name: Quizz_3
   m_EditorClassIdentifier: 
-  s_question: 'Si juvabien c''est juvamine ! '
+  s_question: "Bordeaux doit son nom \xE0 un vin"
   i_idx_answer: 1
