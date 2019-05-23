@@ -13,7 +13,7 @@ public class Script_UI_Manager : MonoBehaviour
 
     public List<GameObject> g_menu_list = new List<GameObject>();
     public List<Button> b_button_list = new List<Button>();
-    private int i_current_menu_idx = 0;
+    private int i_current_menu_idx;
 
     [Header("WebViewer")]
 
@@ -32,7 +32,7 @@ public class Script_UI_Manager : MonoBehaviour
 
     [Header("Interactive Video")]
     public VideoPlayer my_video_player;
-    public List<Button> buttons_video_player = new List<Button>();
+    public List<GameObject> buttons_video_player = new List<GameObject>();
     public List<Scriptable_Interactive_Video> scriptable_video = new List<Scriptable_Interactive_Video>();
     private int i_current_scriptable_idx=0;
     private bool b_can_show_buttons;
@@ -55,6 +55,11 @@ public class Script_UI_Manager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        ChangeMenu(0);
+    }
+
     IEnumerator WaitTime(float f_waiting_time)
     {
         yield return new WaitForSeconds(f_waiting_time);
@@ -62,24 +67,30 @@ public class Script_UI_Manager : MonoBehaviour
     }
 
     #region Menu Manager
-    public void ChangeMenu()
+
+    public void SelectMenu()
     {
         Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
-        DisableCurrentButton(cTrs.GetSiblingIndex());
+        ChangeMenu(cTrs.GetSiblingIndex());
+    }
+
+    public void ChangeMenu(int menu_idx)
+    {
+        DisableCurrentButton(menu_idx);
 
         g_menu_list[i_current_menu_idx].SetActive(false);
-        g_menu_list[cTrs.GetSiblingIndex()].SetActive(true);
-        i_current_menu_idx = cTrs.GetSiblingIndex();
+        g_menu_list[menu_idx].SetActive(true);
+        i_current_menu_idx = menu_idx;
 
-        if(cTrs.GetSiblingIndex() == 0)
+        if (menu_idx == 0)
         {
             cs_web_viewer.StartWebViewer();
         }
-        if (cTrs.GetSiblingIndex() != 0)
+        if (menu_idx != 0)
         {
             cs_web_viewer.StopWebView();
         }
-        if (cTrs.GetSiblingIndex() != 0 && cTrs.GetSiblingIndex() == 1)
+        if (menu_idx != 0 && menu_idx == 1)
         {
             PlayInteractiveVideo(scriptable_video[0].video_to_play[0]);
             i_current_scriptable_idx = 1;
@@ -94,8 +105,6 @@ public class Script_UI_Manager : MonoBehaviour
     #endregion
 
     #region Interactive Video
-    //INTERACTIVE VIDEO
-
     public void PlayInteractiveVideo(VideoClip video)//Jouer une video
     {
         my_video_player.clip = video;
@@ -109,11 +118,11 @@ public class Script_UI_Manager : MonoBehaviour
         {
             if (scriptable_video[i_current_scriptable_idx].video_to_play[i] != null)
             {
-                buttons_video_player[i].interactable = true;
+                buttons_video_player[i].SetActive(true);
             }
             else
             {
-                buttons_video_player[i].interactable = false;
+                buttons_video_player[i].SetActive(false);
             }
         }
         b_can_show_buttons = true;
@@ -150,9 +159,9 @@ public class Script_UI_Manager : MonoBehaviour
             }
             b_can_show_buttons = false;
 
-            foreach(Button interactivebutton in buttons_video_player)
+            foreach (GameObject interactivebutton in buttons_video_player)
             {
-                interactivebutton.interactable = false;
+                interactivebutton.SetActive(false);
             }
         }
     }
@@ -173,6 +182,10 @@ public class Script_UI_Manager : MonoBehaviour
     #region Video
     public void LaunchVideo()
     {
+        if(g_menu_list[0].activeSelf)
+        {
+            cs_web_viewer.StopWebView();
+        }
         Script_Game_Manager.Instance.DisablePopUpQuizz();
         DisplayVideo();
     }
@@ -186,6 +199,7 @@ public class Script_UI_Manager : MonoBehaviour
     {
         g_video.SetActive(false);
         Script_Game_Manager.Instance.ResetTimerInactivity();
+        ChangeMenu(0);
     }
     #endregion
 
@@ -220,7 +234,6 @@ public class Script_UI_Manager : MonoBehaviour
         }
         else if (i_quizz_already_asked.Count == scriptable_quizz_list.Count)
         {
-            Debug.Log("Restart");
             i_quizz_already_asked.Clear();
             PopulateQuizz();
         }
@@ -232,7 +245,7 @@ public class Script_UI_Manager : MonoBehaviour
         if (cTrs.GetSiblingIndex() == scriptable_quizz_list[i_current_quizz].i_idx_answer)
         {
             HideQuizz();
-            LaunchVideo();
+            ChangeMenu(0);
         }
         else if (cTrs.GetSiblingIndex() != scriptable_quizz_list[i_current_quizz].i_idx_answer)
         {
