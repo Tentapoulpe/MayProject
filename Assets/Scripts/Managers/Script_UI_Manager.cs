@@ -61,8 +61,6 @@ public class Script_UI_Manager : MonoBehaviour
     }
 
     #region Menu Manager
-    //MENU MANAGER 
-
     public void ChangeMenu()
     {
         Transform cTrs = EventSystem.current.currentSelectedGameObject.transform;
@@ -173,8 +171,6 @@ public class Script_UI_Manager : MonoBehaviour
     #endregion
 
     #region Video
-    //VIDEO
-
     public void LaunchVideo()
     {
         Script_Game_Manager.Instance.DisablePopUpQuizz();
@@ -191,12 +187,9 @@ public class Script_UI_Manager : MonoBehaviour
         g_video.SetActive(false);
         Script_Game_Manager.Instance.ResetTimerInactivity();
     }
-
     #endregion
 
     #region Quizz
-    //QUIZZ
-
     public void VerifyScreen()// si on est pas sur l'écran de WEB ou Interactive video
     {
         if (i_current_menu_idx != 0 || i_current_scriptable_idx != 1)

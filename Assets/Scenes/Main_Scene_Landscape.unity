@@ -1437,7 +1437,6 @@ MonoBehaviour:
   - {fileID: 1780833509}
   - {fileID: 552280742}
   - {fileID: 2127048888}
-  - {fileID: 275890652}
   b_button_list:
   - {fileID: 2049305610}
   - {fileID: 1673609710}
@@ -1450,7 +1449,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 636828de0f6299b49b7f5695838a1893, type: 2}
   - {fileID: 11400000, guid: 9df4647d51f3f72448daa6894a98e243, type: 2}
   - {fileID: 11400000, guid: 4f20676bf27afcb43a1422bdd68d0557, type: 2}
-  g_video: {fileID: 397505089}
+  g_video: {fileID: 275890652}
   my_video_player: {fileID: 1472452799}
   buttons_video_player:
   - {fileID: 1086501113}
@@ -3388,17 +3387,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 675802509}
         m_MethodName: LaunchVideo
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 675802509}
-        m_MethodName: ChangeMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

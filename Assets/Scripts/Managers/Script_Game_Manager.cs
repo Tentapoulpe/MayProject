@@ -67,7 +67,6 @@ public class Script_Game_Manager : MonoBehaviour
 
     public void ResetTimerInactivity()
     {
-        Debug.Log("ResetQuizzTimer");
         f_current_timer = f_set_timer;
         b_can_block = true;
     }
