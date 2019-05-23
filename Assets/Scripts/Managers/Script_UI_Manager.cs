@@ -86,7 +86,7 @@ public class Script_UI_Manager : MonoBehaviour
 
     //QUIZZ
 
-    public void VerifyScreen()// si on est pas sur l'écran de WEB
+    public void VerifyScreen()// si on est pas sur l'écran de WEB ou Interactive video
     {
         if(i_current_menu_idx != 0 || i_current_scriptable_idx != 1)
         {
@@ -150,9 +150,7 @@ public class Script_UI_Manager : MonoBehaviour
 
     public void LaunchVideo()
     {
-        Debug.Log("Vidéo");
         Script_Game_Manager.Instance.DisablePopUpQuizz();
-        FlipVideoHorizontally();
         DisplayVideo();
     }
 
@@ -165,11 +163,6 @@ public class Script_UI_Manager : MonoBehaviour
     {
         g_video.SetActive(false);
         Script_Game_Manager.Instance.ResetTimerInactivity();
-    }
-
-    public void FlipVideoHorizontally()
-    {
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
     //INTERACTIVE VIDEO

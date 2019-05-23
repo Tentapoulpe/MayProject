@@ -31,18 +31,6 @@ public class Script_Game_Manager : MonoBehaviour
         Screen.fullScreen = true;
     }
 
-    public void ResetTimerInactivity()
-    {
-        Debug.Log("ResetQuizzTimer");
-        f_current_timer = f_set_timer;
-        b_can_block = true;
-    }
-
-    public void DisablePopUpQuizz()
-    {
-        b_can_block = false;
-    }
-
     void Update()
     {
         if(b_can_block)
@@ -69,6 +57,22 @@ public class Script_Game_Manager : MonoBehaviour
             ResetTimerInactivity();
         }
     }
+
+    //Quizz 
+
+    public void DisablePopUpQuizz()
+    {
+        b_can_block = false;
+    }
+
+    public void ResetTimerInactivity()
+    {
+        Debug.Log("ResetQuizzTimer");
+        f_current_timer = f_set_timer;
+        b_can_block = true;
+    }
+
+    //Quitter
 
     public void Quit()
     {
