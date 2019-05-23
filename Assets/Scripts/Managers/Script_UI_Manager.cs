@@ -58,6 +58,7 @@ public class Script_UI_Manager : MonoBehaviour
     IEnumerator WaitTime(float f_waiting_time)
     {
         yield return new WaitForSeconds(f_waiting_time);
+        my_input_field.GetComponentInChildren<Text>().text = "@";
     }
 
     #region Menu Manager
@@ -74,14 +75,14 @@ public class Script_UI_Manager : MonoBehaviour
         {
             cs_web_viewer.StartWebViewer();
         }
-        else if (cTrs.GetSiblingIndex() != 0 && cTrs.GetSiblingIndex() == 1)
+        if (cTrs.GetSiblingIndex() != 0)
+        {
+            cs_web_viewer.StopWebView();
+        }
+        if (cTrs.GetSiblingIndex() != 0 && cTrs.GetSiblingIndex() == 1)
         {
             PlayInteractiveVideo(scriptable_video[0].video_to_play[0]);
             i_current_scriptable_idx = 1;
-        }
-        else if (cTrs.GetSiblingIndex() != 0)
-        {
-            cs_web_viewer.StopWebView();
         }
     }
 
@@ -166,7 +167,6 @@ public class Script_UI_Manager : MonoBehaviour
         my_input_field.text = "";
         my_input_field.GetComponentInChildren<Text>().text = "Envoyé";
         StartCoroutine(WaitTime(f_delay_text_display));
-        my_input_field.GetComponentInChildren<Text>().text = "@";
     }
     #endregion
 

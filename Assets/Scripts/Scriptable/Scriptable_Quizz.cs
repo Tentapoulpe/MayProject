@@ -12,6 +12,7 @@ public class Scriptable_Quizz : ScriptableObject
     public int i_idx_answer;
 }
 
+#if UNITY_EDITOR
 [CanEditMultipleObjects]
 [CustomEditor(typeof(Scriptable_Quizz))]
 public class Scriptable_Quizz_Editor : Editor
@@ -25,3 +26,4 @@ public class Scriptable_Quizz_Editor : Editor
     }
     
 }
+#endif
