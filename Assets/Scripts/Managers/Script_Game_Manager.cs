@@ -40,7 +40,15 @@ public class Script_Game_Manager : MonoBehaviour
             {
                 b_can_block = false;
                 f_current_timer = f_set_timer;
-                Script_UI_Manager.Instance.VerifyScreen();
+                if(Script_UI_Manager.Instance.ReturnBoolQuizz())
+                {
+                    Script_UI_Manager.Instance.DisplayQuizz();
+                    Script_UI_Manager.Instance.PopulateQuizz();
+                }
+                else
+                {
+                    ResetTimerInactivity();
+                }
             }
         }
 

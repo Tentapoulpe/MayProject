@@ -26,6 +26,7 @@ public class Script_UI_Manager : MonoBehaviour
     public List<Scriptable_Quizz> scriptable_quizz_list = new List<Scriptable_Quizz>();
     private List<int> i_quizz_already_asked = new List<int>();
     private int i_current_quizz;
+    private bool b_ok_menu_quizz = false;
 
     [Header("Video")]
     public GameObject g_video;
@@ -90,11 +91,13 @@ public class Script_UI_Manager : MonoBehaviour
         {
             cs_web_viewer.StopWebView();
         }
-        if (menu_idx != 0 && menu_idx == 1)
+        if (menu_idx == 1)
         {
+            DisableInteractiveVideoButton();
             PlayInteractiveVideo(scriptable_video[0].video_to_play[0]);
             i_current_scriptable_idx = 1;
         }
+        VerifyScreen();
     }
 
     public void DisableCurrentButton(int i_menu_idx)
@@ -158,11 +161,15 @@ public class Script_UI_Manager : MonoBehaviour
                 i_current_scriptable_idx = scriptable_video[i_current_scriptable_idx].i_right_button_idx;
             }
             b_can_show_buttons = false;
+            DisableInteractiveVideoButton();
+        }
+    }
 
-            foreach (GameObject interactivebutton in buttons_video_player)
-            {
-                interactivebutton.SetActive(false);
-            }
+    public void DisableInteractiveVideoButton()
+    {
+        foreach (GameObject interactivebutton in buttons_video_player)
+        {
+            interactivebutton.SetActive(false);
         }
     }
     #endregion
@@ -206,15 +213,19 @@ public class Script_UI_Manager : MonoBehaviour
     #region Quizz
     public void VerifyScreen()// si on est pas sur l'écran de WEB ou Interactive video
     {
-        if (i_current_menu_idx != 0 || i_current_scriptable_idx != 1)
+        if (i_current_menu_idx == 0 || i_current_scriptable_idx == 1)
         {
-            DisplayQuizz();
-            PopulateQuizz();
+            b_ok_menu_quizz = false;
         }
         else
         {
-            Script_Game_Manager.Instance.DisablePopUpQuizz();
+            b_ok_menu_quizz = true;
         }
+    }
+
+    public bool ReturnBoolQuizz()
+    {
+        return b_ok_menu_quizz;
     }
 
     public void PopulateQuizz()//Renseigné dans les boutons / text le string correspondant au quizz actuel
