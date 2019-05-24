@@ -93,7 +93,6 @@ public class Script_UI_Manager : MonoBehaviour
         }
         if (menu_idx == 1)
         {
-            DisableInteractiveVideoButton();
             PlayInteractiveVideo(scriptable_video[0].video_to_play[0]);
             i_current_scriptable_idx = 1;
         }
@@ -110,6 +109,7 @@ public class Script_UI_Manager : MonoBehaviour
     #region Interactive Video
     public void PlayInteractiveVideo(VideoClip video)//Jouer une video
     {
+        DisableInteractiveVideoButton();
         my_video_player.clip = video;
         my_video_player.Play();
         my_video_player.loopPointReached += UpdateButtonVideo;
@@ -213,6 +213,7 @@ public class Script_UI_Manager : MonoBehaviour
     #region Quizz
     public void VerifyScreen()// si on est pas sur l'écran de WEB ou Interactive video
     {
+        Debug.Log(i_current_menu_idx);
         if (i_current_menu_idx == 0 || i_current_scriptable_idx == 1)
         {
             b_ok_menu_quizz = false;
@@ -257,6 +258,7 @@ public class Script_UI_Manager : MonoBehaviour
         {
             HideQuizz();
             ChangeMenu(0);
+            Script_Game_Manager.Instance.ResetTimerInactivity();
         }
         else if (cTrs.GetSiblingIndex() != scriptable_quizz_list[i_current_quizz].i_idx_answer)
         {
