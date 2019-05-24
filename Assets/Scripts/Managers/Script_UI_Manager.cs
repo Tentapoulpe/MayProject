@@ -177,12 +177,20 @@ public class Script_UI_Manager : MonoBehaviour
     #region Contacts
     public void SaveEmail()
     {
-        s_e_mail = my_input_field.text;
-        Debug.Log(s_e_mail);
-        Script_Save_Manager.Instance.Save(s_e_mail);
-        my_input_field.text = "";
-        my_input_field.GetComponentInChildren<Text>().text = "Envoyé";
-        StartCoroutine(WaitTime(f_delay_text_display));
+        if(my_input_field.text.Contains("@"))
+        {
+            s_e_mail = my_input_field.text;
+            Debug.Log(s_e_mail);
+            Script_Save_Manager.Instance.Save(s_e_mail);
+            my_input_field.text = "";
+            my_input_field.GetComponentInChildren<Text>().text = "Envoyé";
+            StartCoroutine(WaitTime(f_delay_text_display));
+        }
+        else
+        {
+            my_input_field.text = "";
+            my_input_field.GetComponentInChildren<Text>().text = "Veuillez entrer une adresse mail existante";
+        }
     }
     #endregion
 
