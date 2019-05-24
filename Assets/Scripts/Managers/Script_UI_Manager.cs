@@ -101,8 +101,9 @@ public class Script_UI_Manager : MonoBehaviour
 
     public void DisableCurrentButton(int i_menu_idx)
     {
-        b_button_list[i_menu_idx].interactable = false;
         b_button_list[i_current_menu_idx].interactable = true;
+        b_button_list[i_menu_idx].interactable = false;
+
     }
     #endregion
 
