@@ -56,7 +56,7 @@ public class Script_Game_Manager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Debug.Log("Back");
+                
             }
         }
 

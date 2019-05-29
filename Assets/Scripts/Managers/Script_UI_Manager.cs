@@ -28,9 +28,6 @@ public class Script_UI_Manager : MonoBehaviour
     private int i_current_quizz;
     private bool b_ok_menu_quizz = false;
 
-    [Header("Video")]
-    public GameObject g_video;
-
     [Header("Interactive Video")]
     public VideoPlayer my_video_player;
     public List<GameObject> buttons_video_player = new List<GameObject>();
@@ -43,6 +40,17 @@ public class Script_UI_Manager : MonoBehaviour
     public GameObject text_send;
     public float f_delay_text_display;
     private string s_e_mail;
+
+    [Header("Video")]
+    public GameObject g_video;
+
+    [Header("Carrousel")]
+    public List<GameObject> my_image_list = new List<GameObject>();
+    public float swipe_distance_minim;
+    private bool b_can_swipe = true;
+    private Vector2 startPosition;
+    private Vector2 endPosition;
+    private int i_current_carrousel_idx = 0;
 
     private void Awake()
     {
@@ -59,6 +67,45 @@ public class Script_UI_Manager : MonoBehaviour
     private void Start()
     {
         ChangeMenu(0);
+    }
+
+    private void Update()
+    {
+        if (b_can_swipe)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                startPosition = Input.mousePosition;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                endPosition = Input.mousePosition;
+
+                if (Vector2.Distance(startPosition, endPosition) > swipe_distance_minim)
+                {
+                    if (startPosition.x < endPosition.x)
+                    {
+                        if (i_current_carrousel_idx != 0)
+                        {
+                            Debug.Log("Precedent Image");
+                            my_image_list[i_current_carrousel_idx].SetActive(false);
+                            i_current_carrousel_idx--;
+                            my_image_list[i_current_carrousel_idx].SetActive(true);
+                        }
+                    }
+                    if (startPosition.x > endPosition.x)
+                    {
+                        if (i_current_carrousel_idx != my_image_list.Count - 1)
+                        {
+                            Debug.Log("Next Image");
+                            my_image_list[i_current_carrousel_idx].SetActive(false);
+                            i_current_carrousel_idx++;
+                            my_image_list[i_current_carrousel_idx].SetActive(true);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     IEnumerator WaitTime(float f_waiting_time)
@@ -82,19 +129,33 @@ public class Script_UI_Manager : MonoBehaviour
         g_menu_list[i_current_menu_idx].SetActive(false);
         g_menu_list[menu_idx].SetActive(true);
         i_current_menu_idx = menu_idx;
+        b_can_swipe = false;
 
         if (menu_idx == 0)
         {
             cs_web_viewer.StartWebViewer();
         }
-        if (menu_idx != 0)
+        else
         {
             cs_web_viewer.StopWebView();
         }
-        if (menu_idx == 1)
+
+        switch (menu_idx)
         {
-            PlayInteractiveVideo(scriptable_video[0].video_to_play[0]);
-            i_current_scriptable_idx = 1;
+            case 1:
+                PlayInteractiveVideo(scriptable_video[0].video_to_play[0]);
+                i_current_scriptable_idx = 1;
+                break;
+
+            case 3:
+                b_can_swipe = true;
+                break;
+            case 4:
+                LaunchVideo();
+                break;
+
+            default:
+                break;
         }
         VerifyScreen();
     }
